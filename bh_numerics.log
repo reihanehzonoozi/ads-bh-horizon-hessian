@@ -1,0 +1,142 @@
+# Reference run of bh_numerics.py
+# python 3.12.3 | numpy 2.4.4 | scipy 1.17.1 | matplotlib 3.10.8 | Linux x86_64
+
+
+Bogomolny bound: numerical 0.942809, exact 0.942809, relative error 2.7e-09
+
+Positivity check behind Proposition 1
+   phi=0.1 :  V''phi - V' = 0.002000    2*lam*phi^3 = 0.002000
+   phi=0.4 :  V''phi - V' = 0.128000    2*lam*phi^3 = 0.128000
+   phi=0.9 :  V''phi - V' = 1.458000    2*lam*phi^3 = 1.458000
+   k=+1 :  min phi_0 on (a,R] = +1.940e-02   positive: True
+   k=+0 :  min phi_0 on (a,R] = +1.995e-02   positive: True
+   k=-1 :  min phi_0 on (a,R] = +2.064e-02   positive: True
+
+Sub-threshold levels (r_h = 6, threshold = 2.140625)
+  R-r_h    k    lam_1      lam_2    lam_2 - th   below th
+     300  +1   2.13923   2.21726     0.07664        1
+     300  +0   2.13121   2.21051     0.06989        1
+     300  -1   2.12094   2.20373     0.06311        1
+     600  +1   2.13787   2.19563     0.05501        1
+     600  +0   2.13040   2.19056     0.04993        1
+     600  -1   2.12052   2.18561     0.04499        1
+    1200  +1   2.13710   2.18172     0.04110        1
+    1200  +0   2.12998   2.17773     0.03711        1
+    1200  -1   2.12034   2.17398     0.03336        1
+    2400  +1   2.13663   2.17232     0.03170        1
+    2400  +0   2.12976   2.16908     0.02846        1
+    2400  -1   2.12025   2.16616     0.02554        1
+  The second level moves steadily toward threshold as R grows, which is
+  what a box mode does.  No count of bound states is claimed.
+
+Table 2  (N=4000, span=6, l=4, lambda=v=1)
+  block            horizon    r_h     lam_min    lam_2     ind
+  M = 0.5 fixed    S^2      0.947    +2.405    +3.236    0
+  M = 0.5 fixed    R^2      2.520    +2.178    +2.794    0
+  M = 0.5 fixed    H^2      4.429    +2.169    +3.036    0
+  r_h = 6 fixed    S^2      6.000    +2.336    +3.985    0
+  r_h = 6 fixed    R^2      6.000    +2.289    +3.769    0
+  r_h = 6 fixed    H^2      6.000    +2.243    +3.553    0
+  (hyperbolic entries lie on the positive-mass branch r_h > l)
+
+Grid convergence at fixed r_h=6 (span=6, eps=0.003)
+   N      lam(+1)      lam(0)       lam(-1)        gap
+   500     2.337694     2.291402     2.245195    0.0924982
+  1000     2.336071     2.289789     2.243580    0.0924916
+  2000     2.335643     2.289362     2.243153    0.0924898
+  4000     2.335534     2.289254     2.243044    0.0924893
+  8000     2.335506     2.289227     2.243017    0.0924892
+
+Table 3: horizon screening of the curvature gap (l=4, span=6)
+  Monotone decay with r_h is a numerical observation over the range
+  tabulated at this fixed exterior span, not a proved limit; Theorem 1
+  proves monotonicity in k at fixed r_h only.
+  r_h     lam_min(+1)  lam_min(-1)     gap      gap * r_h
+    5.0      2.3082       2.1971     0.1111      0.556
+    6.0      2.3355       2.2430     0.0925      0.555
+    8.0      2.4072       2.3359     0.0714      0.571
+   12.0      2.5967       2.5446     0.0521      0.625
+   20.0      3.1073       3.0703     0.0371      0.741
+   32.0      4.1131       4.0858     0.0274      0.876
+
+Planar scaling test (k = 0)
+  fixed (R-r_h)/r_h = 100:
+     r_h=    5   lam_min = 2.130534
+     r_h=    8   lam_min = 2.130534
+     r_h=   12   lam_min = 2.130534
+     r_h=   20   lam_min = 2.130534
+  fixed span L = 600 (for contrast):
+     r_h=    5   (R-r_h)/r_h= 120.0   lam_min = 2.130585
+     r_h=    8   (R-r_h)/r_h=  75.0   lam_min = 2.130608
+     r_h=   12   (R-r_h)/r_h=  50.0   lam_min = 2.130996
+     r_h=   20   (R-r_h)/r_h=  30.0   lam_min = 2.132000
+  The first block is constant; the second drifts.  The drift is an
+  outer-boundary effect, not horizon physics.
+
+Table 4: screening of the resolved bound state
+  ((R-r_h)/r_h = 200, dr = 0.00833, l = 4; continuum threshold = 2.140625)
+     r_h        N      k=+1       k=0      k=-1       gap  rh^2 gap  bound?
+       5   120000    2.1397    2.1301    2.1153    0.0244     0.610     yes
+       6   144000    2.1371    2.1300    2.1203    0.0168     0.603     yes
+       8   192000    2.1341    2.1298    2.1248    0.0094     0.600     yes
+      12   288000    2.1317    2.1297    2.1276    0.0042     0.600     yes
+      20   480000    2.1304    2.1297    2.1289    0.0015     0.602     yes
+  Quoted to four digits: the individual levels move by a few units in
+  the fourth decimal when R/r_h or the grid is changed.  The ordering
+  and the sign of the screening are stable; the further digits are not.
+
+AdS threshold and box law
+  self-consistent profile, k=0, r_h=6, l=4: lam_min vs exterior span
+  (the level first approaches the AdS threshold and then resolves the shallow wall-bound state)
+     span =    6   N =  4000   lam_min = 2.2893
+     span =   12   N =  4000   lam_min = 2.1909
+     span =   24   N =  4000   lam_min = 2.1548
+     span =   48   N =  4000   lam_min = 2.1413
+     span =   96   N =  5000   lam_min = 2.1363
+     span =  200   N =  8000   lam_min = 2.1343
+     continuum threshold 2 lam v^2 + 9/(4 l^2) = 2.1406
+  vacuum operator, k=0, r_h=6: measured vs box law
+     l = 2, span =   200 : measured 2.7120, predicted 2.7169
+     l = 2, span =  1000 : measured 2.6410, predicted 2.6416
+     l = 2, span =  5000 : measured 2.6116, predicted 2.6102
+     l = 4, span =   200 : measured 2.1780, predicted 2.1792
+     l = 4, span =  1000 : measured 2.1603, predicted 2.1604
+     l = 4, span =  5000 : measured 2.1529, predicted 2.1526
+     l = 8, span =   200 : measured 2.0445, predicted 2.0448
+     l = 8, span =  1000 : measured 2.0401, predicted 2.0401
+     l = 8, span =  5000 : measured 2.0382, predicted 2.0381
+
+Large-box spectrum at r_h=6, span=300, N=40000  (threshold 2.140625)
+   k      lam_1       lam_2      levels below threshold
+  +1    2.139179    2.217230          1
+  +0    2.131150    2.210481          1
+  -1    2.120864    2.203704          1
+   control, wall removed (vacuum profile, same grid and offset): lam_1 = 2.172324
+   -> the sub-threshold level is produced by the wall, not by the grid
+
+Theorem 1 at fixed horizon radius r_h = 6
+  common profile      : lam_min = 2.3707, 2.2893, 2.2000  (k = +1, 0, -1)
+  self-consistent     : lam_min = 2.3355, 2.2893, 2.2430
+  gap  common = 0.1707   self-consistent = 0.0925   (profile response 46%)
+  Rayleigh quotient <D> = 0.0848
+  concavity bracket   : 0.0815 <= 0.0848 <= 0.0893
+
+Sensitivity to the inner offset epsilon (r_h = 6)
+  epsilon    lam_min(+1)  lam_min(-1)     gap
+    3e-03      2.3355       2.2430     0.0925
+    1e-02      2.3240       2.2244     0.0996
+    3e-02      2.3411       2.2286     0.1125
+    1e-01      2.4898       2.3356     0.1542
+
+Near-zone data for the auxiliary sl(2,R) construction of Appendix A (l=4)
+  k    r_h      r_-        T_H      1/(2 pi T_H)   2 r_h^2/Delta'(r_h)
+  +1     6.0     -40.50    0.1028      1.54839          1.54839
+  +0     6.0     -34.50    0.0895      1.77778          1.77778
+  -1     6.0     -28.50    0.0763      2.08696          2.08696
+  consistency check beta = 1/(2 pi T_H) = 2 r_h^2/Delta'(r_h) over the
+  tabulated range: PASS
+  half Delta''(r_h) = k + 6 r_h^2/l^2, so the near-zone condition of
+  Eq. (A.12) reads r - r_h << Delta'(r_h) / |k + 6 r_h^2/l^2 - 1|:
+     k = +1 : validity width = 3.444
+     k = +0 : validity width = 3.240
+     k = -1 : validity width = 3.000
