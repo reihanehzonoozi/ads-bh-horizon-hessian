@@ -13,7 +13,7 @@ The numerical calculations are implemented in two Python scripts, as stated in t
 - `bh_numerics.py` — main black-hole numerical calculation: a flat-space Bogomolny infrastructure check, profiles, spectra, grid convergence, AdS threshold and large-box checks, curvature screening, fixed-profile theorem test, offset sensitivity, near-zone consistency, and Figures 1–3.
 - `horizon_nogo_numerics.py` — independent calculation of the horizon-regular no-go statement, positivity of $\Delta'$, and the stretched-horizon balance/offset scan.
 
-Every figure in the manuscript is produced with Python (Matplotlib) by these scripts, and every number quoted in the manuscript tables is regenerated deterministically by them. No external research dataset is required and no random seeds are involved.
+Every figure in the manuscript is produced with Python (Matplotlib) by these scripts. The numerical table values can be reproduced with the stated parameters, up to solver and floating-point precision. No external research dataset is required and no random seeds are involved.
 
 ## Scientific scope
 
@@ -91,15 +91,13 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Equivalently, without the pinned file:
+Equivalently, without using `requirements.txt`:
 
 ```bash
 python -m pip install "numpy>=1.20" "scipy>=1.7" "matplotlib>=3.4"
 ```
 
-These are the same minimum versions quoted in the manuscript. The code was
-last verified against NumPy 2.4.4, SciPy 1.17.1 and Matplotlib 3.10.8; the
-reference logs in `logs/` record the exact environment of each run.
+These are the same minimum versions quoted in the manuscript. The authors' reference runs used NumPy 2.4.4, SciPy 1.17.1 and Matplotlib 3.10.8; the original logs in `logs/` record their exact environments. The independent full reproduction on 12 October 2026 used Python 3.12.14, NumPy 2.3.5, SciPy 1.17.0 and Matplotlib 3.10.8.
 
 ## Reproducing the main black-hole calculation
 
@@ -153,7 +151,7 @@ $$
 2\lambda v^2+\frac{9}{4\ell^2}=2.140625.
 $$
 
-The large-box calculation resolves a shallow positive wall-bound state below this threshold. At $r_h=6$, exterior span `300`, and `N=40000`, the reference run gives
+The large-box calculation resolves a shallow positive layer-bound state below this threshold. At $r_h=6$, exterior span `300`, and `N=40000`, the reference run gives
 
 ```text
 k=+1: lambda_1 = 2.139179
@@ -190,13 +188,13 @@ Accordingly, the numerical magnitude of the gap is a defining-scale-dependent qu
 
 ### Near-zone consistency
 
-The main script also evaluates the near-zone quantities entering the static $\mathfrak{sl}(2,\mathbb R)$ construction and verifies
+The main script also evaluates the near-zone quantities entering the auxiliary near-zone $\mathfrak{sl}(2,\mathbb R)$ construction and verifies
 
 $$
 \beta=\frac{1}{2\pi T_H}=\frac{2r_h^2}{\Delta'(r_h)}
 $$
 
-throughout the tabulated test range.
+throughout the tabulated test range. This check concerns the auxiliary near-zone surrogate; it does not establish an exact symmetry or a Love-number selection rule for the full anti-de Sitter boundary-value problem.
 
 ## Regenerating Figures 1–3
 
@@ -272,7 +270,7 @@ What the identity establishes is that the boundary slope diverges as $\epsilon\t
 
 ## Reproducibility status
 
-The supplied reference-run logs record the benchmark results reported above. For this documentation alignment, the computational code was verified unchanged and selected numerical controls were rerun; no new full execution of both research scripts is claimed.
+The supplied reference-run logs record the benchmark results reported above. On 12 October 2026, both scripts were independently rerun in full: `python bh_numerics.py --figures` and `python horizon_nogo_numerics.py`. Both exited successfully, the reported numerical results were reproduced within the stated precision, and all three regenerated figures were pixel-identical to the manuscript figures. This documentation update changes no computational code.
 
 The following interpretation should be preserved:
 
@@ -290,4 +288,4 @@ If this code contributes to published work, please cite the associated manuscrip
 
 ## Reference-log provenance
 
-The files in `logs/` are the original reference runs supplied by the authors. They are preserved without editing. This alignment updates documentation and a few printed labels, while leaving the numerical algorithms and parameters unchanged; historical labels in those logs may therefore differ from the current wording. Fresh targeted checks are included in the submission package.
+The files in `logs/` are the original reference runs supplied by the authors and are preserved without editing. The latest documentation update changes no research script, algorithm or numerical parameter. Historical labels in the reference logs may therefore differ from the current wording. Logs of the independent full reproduction on 12 October 2026 are included separately under `Final_Check/` in the submission package.
